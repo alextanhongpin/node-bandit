@@ -30,16 +30,3 @@ class ThompsonSampling {
 }
 
 module.exports = ThompsonSampling
-
-const thompson = new ThompsonSampling({ n: 3 })
-
-const arms = [0.1, 0.1, 0.5]
-arms.forEach((threshold) => {
-  Array(1000).fill(0).forEach((_, index) => {
-    const arm = thompson.selectArm()
-    console.log(arm)
-    thompson.update(arm, Math.random() < threshold ? 1 : 0)
-  })
-})
-
-console.log(thompson)

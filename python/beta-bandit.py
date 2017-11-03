@@ -3,8 +3,10 @@ from scipy.stats import beta
 
 class BetaBandit(object):
     def __init__(self, num_options=2, prior=(1.0, 1.0)):
-        self.trials = zeros(shape(num_options,), dtype=int)
-        self.successes = zeros(shape(num_options,), dtype=int)
+        self.trials = zeros(shape=(num_options,), dtype=int)
+        self.successes = zeros(shape=(num_options,), dtype=int)
+        print("trials: {}", self.trials)
+        print("successes: {}", self.successes)
         self.num_options = num_options
         self.prior = prior
     
@@ -18,7 +20,7 @@ class BetaBandit(object):
         for i in range(self.num_options):
             # Construct beta distribution for posterior
             dist = beta(self.prior[0] + self.successes[i],
-                self.prior[1] + self.trials[i] - self.successes[i])
+                        self.prior[1] + self.trials[i] - self.successes[i])
             
             # Draw sample from beta distribution
             sampled_theta += [dist.rvs()]
@@ -26,8 +28,9 @@ class BetaBandit(object):
         return sampled_theta.index(max(sampled_theta))
 
 
-# bandit = BetaBandit()
-# arm = bandit.get_recommendation()
-# print(arm)
-# bandit.add_result(arm, 1)
-# print(bandit)
+bandit = BetaBandit(2)
+
+for i in range(100):
+    arm = bandit.get_recommendation()
+    bandit.add_result(arm, 1)
+print(bandit.trials, bandit.successes)
