@@ -1,6 +1,7 @@
 
 const fs = require('fs')
 const seedrandom = require('seedrandom')
+
 const EpsilonGreedy = require('../bandit/epsilon-greedy')
 const Thompson = require('../bandit/thompson-sampling')
 const UCB1 = require('../bandit/ucb1')
@@ -66,9 +67,13 @@ function runTest (algo) {
   const { cumulativeRewards, optimalScores } = results
 
   const data = Array(horizon).fill().map((_, i) => {
-    const averageOptimal = optimalScores[i] / (i + 1)
+    const probabilityOfBestArm = optimalScores[i] / (i + 1)
     const averageReward = cumulativeRewards[i] / (i + 1)
-    return [ isNaN(averageOptimal) ? 0 : averageOptimal, isNaN(averageReward) ? 0 : averageReward ]
+    return [
+      isNaN(probabilityOfBestArm) ? 0 : probabilityOfBestArm,  // 0
+      isNaN(averageReward) ? 0 : averageReward, // 1
+      cumulativeRewards[i] // 2
+    ]
   })
   return data
 }
@@ -84,29 +89,31 @@ function main () {
     new Thompson({ n: 3 })
   )
 
-  const data = Array(1000).fill().map((_, i) => {
-    const epsilonBestArm = results[0][i][0]
-    const ucb1BestArm = results[1][i][0]
-    const ucb2BestArm = results[2][i][0]
-    const softmaxBestArm = results[3][i][0]
-    const annealingSoftmaxBestArm = results[4][i][0]
-    const thompsonBestArm = results[5][i][0]
-    return [epsilonBestArm, ucb1BestArm, ucb2BestArm, softmaxBestArm, annealingSoftmaxBestArm, thompsonBestArm].join(',')
+  const probabilityOfBestArm = Array(1000).fill().map((_, i) => {
+    const col = 0
+    return results.map((result) => {
+      return result[i][col]
+    }).join(',')
   })
+
+  const averageRewards = Array(1000).fill().map((_, i) => {
+    const col = 1
+    return results.map((result) => {
+      return result[i][col]
+    }).join(',')
+  })
+
+  const cumulativeRewards = Array(1000).fill().map((_, i) => {
+    const col = 2
+    return results.map((result) => {
+      return result[i][col]
+    }).join(',')
+  })
+
   const headers = [['epsilon-greedy', 'ucb1', 'ucb2', 'softmax', 'annealing-softmax', 'thompson'].join(',')]
-  writeCSV('plots/probability-best-arm.csv', headers.concat(data).join('\n'))
-
-  const data2 = Array(1000).fill().map((_, i) => {
-    const epsilonBestArm = results[0][i][1]
-    const ucb1BestArm = results[1][i][1]
-    const ucb2BestArm = results[2][i][1]
-    const softmaxBestArm = results[3][i][1]
-    const annealingSoftmaxBestArm = results[4][i][1]
-    const thompsonBestArm = results[5][i][1]
-    return [epsilonBestArm, ucb1BestArm, ucb2BestArm, softmaxBestArm, annealingSoftmaxBestArm, thompsonBestArm].join(',')
-  })
-
-  writeCSV('plots/average-reward.csv', headers.concat(data2).join('\n'))
+  writeCSV('plots/probability-best-arm.csv', headers.concat(probabilityOfBestArm).join('\n'))
+  writeCSV('plots/average-reward.csv', headers.concat(averageRewards).join('\n'))
+  writeCSV('plots/cumulative-reward.csv', headers.concat(cumulativeRewards).join('\n'))
 }
 
 main()
