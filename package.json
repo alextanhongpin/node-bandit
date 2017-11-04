@@ -2,5 +2,11 @@
   "name": "node-bandit",
   "version": "1.0.0",
   "main": "index.js",
-  "license": "MIT"
+  "license": "MIT",
+  "scripts": {
+    "plot": "node test/simulate"
+  },
+  "dependencies": {
+    "seedrandom": "^2.4.3"
+  }
 }

@@ -1,8 +1,10 @@
+// Softmax randomly selects an arm proportional to the amount of reward it has received before
+
 const { categoricalDraw } = require('../stats')
 
 class Softmax {
-  constructor ({ temperature, n }) { // temperature is equal to epsilon
-    this.temperature = temperature
+  constructor ({ epsilon, n }) { // temperature is equal to epsilon
+    this.temperature = epsilon
     this.counts = Array(n).fill(0)
     this.values = Array(n).fill(0)
   }

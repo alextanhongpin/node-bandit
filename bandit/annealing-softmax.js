@@ -1,3 +1,8 @@
+// Annealing Softmax is an enhanced version of softmax that applies simulated annealing.
+// Simulated annealing (SA) is a probabilistic technique for approximating the global optimum of a given function.
+// The temperature parameter is based on an analogy with Boltzman Distribution in physics in which
+// systems at high temperatures tend to behave randomly, while they take on more structure at low temperatures.
+
 const { sum, categoricalDraw } = require('../stats')
 
 class AnnealingSoftmax {
