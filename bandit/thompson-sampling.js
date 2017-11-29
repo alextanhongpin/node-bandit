@@ -3,7 +3,7 @@
 // dilemma in the multi-armed bandit problem.
 // It consists in choosing the action that maximizes the expected reward with respect to a randomly drawn belief.
 
-const { rBeta, argmax } = require('../stats')
+const { rbeta, argmax } = require('../stats')
 
 class ThompsonSampling {
   constructor ({ n }) {
@@ -19,10 +19,10 @@ class ThompsonSampling {
     const probabilities = Array(this.n).fill(0).map((_, i) => {
       // calculate losses
       const count = this.counts[i] // Trials
-      const value = this.values[i] // Rewards
-      const losses = count - value
+      const successes = this.values[i] // Rewards
+      const failures = count - successes
       // Draw random sample from beta distribution
-      const probability = rBeta(this.a + value, this.b + losses)
+      const probability = rbeta(this.a + successes, this.b + failures)
       return probability
     })
     return argmax(probabilities)
@@ -41,7 +41,7 @@ module.exports = ThompsonSampling
 // let select = {}
 // const probs = [0.2, 0.5, 0.8]
 
-// Array(1000).fill(0).forEach((_, i) => {
+// Array(10000).fill(0).forEach((_, i) => {
 //   const arm = ts.selectArm()
 //   console.log('selected ', arm)
 //   if (!select[arm]) {
