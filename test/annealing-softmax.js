@@ -62,7 +62,7 @@ describe('Annealing Softmax', () => {
   })
 
   it.skip('should write the value to the file', () => {
-    writeToFile(AnnealingSoftmax, 'data/annealing-softmax.csv', (err) => {
+    writeToFile(AnnealingSoftmax, 'data/annealing_softmax.csv', (err) => {
       expect(err).to.be.eq(null)
     })
   })
