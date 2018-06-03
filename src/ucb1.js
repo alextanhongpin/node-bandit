@@ -3,7 +3,7 @@
 // we have in each arm. UCB1 achieves expected logarithmic regret uniformly over time,
 // for all reward distribution, with no prior knowledge of the reward distribution required.
 
-const { sum, maxIndex } = require('./utils/operation')
+const { sum, maxIndex } = require('./utils/math2')
 
 /** Class representing the UCB1. */
 class UCB1 {

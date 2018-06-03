@@ -2,7 +2,7 @@
 // fraction of time a suboptimal arm will be selected, reducing the overall regret,
 // at the cost of only a slightly more complicaed algorithm.
 
-const { sum, maxIndex } = require('./utils/operation')
+const { sum, maxIndex } = require('./utils/math2')
 
 /** Class representing the UCB2. */
 class UCB2 {

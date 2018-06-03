@@ -2,8 +2,7 @@
 // for choosing actions that addresses the exploration-exploitation dilemma in the multi-armed bandit problem.
 // It consists in choosing the action that maximizes the expected reward with respect to a randomly drawn belief.
 
-const { maxIndex } = require('./utils/operation')
-const { rbeta } = require('./utils/math2')
+const { rbeta, maxIndex } = require('./utils/math2')
 
 /** Class representing the ThompsonSampling. */
 class ThompsonSampling {

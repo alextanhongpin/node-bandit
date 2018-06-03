@@ -1,3 +1,12 @@
+
+const sum = (arr) => {
+  return arr.reduce((total, val) => total + val, 0)
+}
+
+const maxIndex = (arr) => {
+  return arr.indexOf(Math.max(...arr))
+}
+
 function rbeta (alpha, beta) {
   const alphaGamma = rgamma(alpha, 1)
   return alphaGamma / (alphaGamma + rgamma(beta, 1))
@@ -62,5 +71,7 @@ function rgamma (alpha, beta) {
 }
 
 module.exports = {
-  rbeta
+  rbeta,
+  sum,
+  maxIndex
 }
