@@ -32,7 +32,7 @@ class ThompsonSampling {
    * @returns {int} index - The index of the best arm.
    */
   selectArm () {
-    const probabilities = Array(this.n).fill(0).map((_, i) => {
+    const probabilities = Array(this.counts.length).fill(0).map((_, i) => {
       // Calculate losses
       const count = this.counts[i] // Trials
       const successes = this.values[i] // Rewards
